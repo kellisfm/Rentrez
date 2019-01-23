@@ -25,5 +25,17 @@ Bburg<-entrez_fetch(db = "nuccore", id = ncbi_ids, rettype = "fasta")
 #id=ncbi_ids, assigns the vector of ids we made earlier to the data, giving the sequences their names
 #Finally, rettype = "fasta" tells R which format the data is in. In this case Fasta
 
-?strsplit
+#we're gonna start off by cleaning up the data using regular expressions cause there's a lot of \n's
+#additionally, we're gonna add in a marker infront of each ncbi id that we can use for string splitting
+Bburg=gsub("\n","",Bburg)
+Bburg=gsub(">","-Target- >",Bburg)
+
 Bburg
+
+#next we can use the string split function to split the string into 3 parts based on our target.  
+
+
+BurgVec=strsplit(Bburg,"-Target- ")
+
+#now we can upload this to a .csv and move on to the R markdown section!
+write.csv(BurgVec,"Sequences.csv")
