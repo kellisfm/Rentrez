@@ -1,0 +1,38 @@
+---
+title: "Analysis"
+author: "Kai Ellis"
+date: "January 23, 2019"
+output: html_document
+---
+
+
+```{r}
+#Kai Ellis
+#20019803
+#assignment 3 part 2
+#this script will:
+#1 import the sequences.csv file
+#2count the numbers of each base pair in each sequence
+#3 print each sequence
+#4print out the number of each nt as a table
+#5 include an image of a bacteria
+#6 link to the wikipedia article on Borrelia burgdorferi
+#7 caluculate %gc content and print in a table
+#8 add headers to distinguish the tables from the seq analysis, and use subheaders for the 3 seqs
+#9 create a scatterplot based on gc content from GC_content.csv (calculate %gc first), distinguish all 3 species as clearly as possible
+
+
+Seq=read.csv("Sequences.csv")
+print("The Three Sequences of Borrelia DNA")
+SeqString=paste(Seq$x)
+
+print(SeqString)
+
+```
+
+[a Picture of Borrelia](Borrelia.jpg)
+
+[Borrelia Burgadorferi Wikipedia](https://en.wikipedia.org/wiki/Borrelia_burgdorferi)
+
+
+
