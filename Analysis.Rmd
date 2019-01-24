@@ -104,11 +104,10 @@ Sequence  |%GC
 GC=read.csv("GC_content.csv")
 #create a new row which has g and c percentages added together
 GC$GCP =(GC$G+GC$C)
-GC$ATP =(100-GC$GCP)
 #remove all rows except for ID and GC% as these are the two needed for the graph
-GCGraph=select(GC,ID,Species,GCP,ATP)  
-#the instructions say to create a scattersheet for gc% even though you need two numerical columns for a scatter sheet? not quite sure what we're supposed to use for the second numerical value, and it's too late to ask now, so I threw in AT%. This of course just creates a line, but it's a working graph at least ¯\_(ツ)_/¯
+GCGraph=select(GC,ID,Species,GCP,G)  
+#Wasn't quite sure what to throw in for the second numeric variable for this scatter plot. so g% got used
 
-qplot(ATP,GCP,colour=Species,data=GC,ylab = "AT%", xlab = "GC%", alpha=I(0.7)) + theme_classic()
+qplot(G,GCP,colour=Species,data=GC,ylab = "G%", xlab = "GC%", shape = Species, alpha=I(0.7)) + theme_classic()
 ```
 
