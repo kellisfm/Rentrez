@@ -29,14 +29,15 @@ Bburg<-entrez_fetch(db = "nuccore", id = ncbi_ids, rettype = "fasta")
 #additionally, we're gonna add in a marker infront of each ncbi id that we can use for string splitting
 Bburg=gsub("\n","",Bburg)
 Bburg=gsub(">","-Target- >",Bburg)
-Bburg=sub("-Target- ","",Bburg)
 
-Bburg
+#remove the first target to prevent the creation of an empty string through strsplit.
+Bburg=sub("-Target- ","",Bburg)
 
 #next we can use the string split function to split the string into 3 parts based on our target.  
 
-
 BurgVec=strsplit(Bburg,"-Target- ")
-BurgVec
+#unlist seems to remove the title from the csv, which is nice.
+BurgVec=unlist(BurgVec)
+
 #now we can upload this to a .csv and move on to the R markdown section!
 write.csv(BurgVec,"Sequences.csv")
