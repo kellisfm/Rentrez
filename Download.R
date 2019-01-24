@@ -28,6 +28,7 @@ Bburg<-entrez_fetch(db = "nuccore", id = ncbi_ids, rettype = "fasta")
 #we're gonna start off by cleaning up the data using regular expressions cause there's a lot of \n's
 #additionally, we're gonna add in a marker infront of each ncbi id that we can use for string splitting
 Bburg=gsub("\n","",Bburg)
+Bburg=gsub(" sequence"," sequence: ",Bburg)
 Bburg=gsub(">","-Target- >",Bburg)
 
 #remove the first target to prevent the creation of an empty string through strsplit.
@@ -39,5 +40,7 @@ BurgVec=strsplit(Bburg,"-Target- ")
 #unlist seems to remove the title from the csv, which is nice.
 BurgVec=unlist(BurgVec)
 
+BurgVec
 #now we can upload this to a .csv and move on to the R markdown section!
 write.csv(BurgVec,"Sequences.csv")
+
