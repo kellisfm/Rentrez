@@ -6,33 +6,73 @@ output: html_document
 ---
 
 
-```{r}
+```{r echo=FALSE}
 #Kai Ellis
 #20019803
 #assignment 3 part 2
 #this script will:
 #1 import the sequences.csv file
-#2count the numbers of each base pair in each sequence
+#2 count the numbers of each base pair in each sequence
 #3 print each sequence
-#4print out the number of each nt as a table
+#4 print out the number of each nt as a table
 #5 include an image of a bacteria
 #6 link to the wikipedia article on Borrelia burgdorferi
 #7 caluculate %gc content and print in a table
 #8 add headers to distinguish the tables from the seq analysis, and use subheaders for the 3 seqs
 #9 create a scatterplot based on gc content from GC_content.csv (calculate %gc first), distinguish all 3 species as clearly as possible
 
-
+#read the csv for the data.
+library(knitr)
 Seq=read.csv("Sequences.csv")
-print("The Three Sequences of Borrelia DNA")
-SeqString=paste(Seq$x)
+#this command removes all supplimentary info from the sequences, leaving us with purely the nucleotides
+PureSeq=paste(gsub(">.*: ","",Seq$x))
 
-print(SeqString)
+#The following commands count the number of each type of (naming conventions: Pure Sequence As = PSA)
+#nucleotide in each sequnce by removing everything from the sequnce except for that type of nucleotide
+#additionally, the Names obj contains all of the names of the nucleotides
+
+PSA=nchar(gsub(">.*: |*[^A]","",Seq$x))
+PST=nchar(gsub(">.*: |*[^T]","",Seq$x))
+PSC=nchar(gsub(">.*: |*[^C]","",Seq$x))
+PSG=nchar(gsub(">.*: |*[^G]","",Seq$x))
+Names=gsub("Borrelia.*","",Seq$x)
 
 ```
 
-[a Picture of Borrelia](Borrelia.jpg)
 
 [Borrelia Burgadorferi Wikipedia](https://en.wikipedia.org/wiki/Borrelia_burgdorferi)
 
+![a Picture of Borrelia](Borrelia.jpg)
 
+
+
+#The Sequences of Borrelia DNA
+
+###`r paste(Names[1])`
+```{r echo = F}
+print(PureSeq[1])
+#using paste instead of print seems to result in a straight line of letters, removing legability.
+```
+
+
+
+###`r paste(Names[2])`
+```{r echo = F}
+print(PureSeq[2])
+```
+
+###`r paste(Names[3])`
+
+```{r echo = F}
+print(PureSeq[3])
+```
+
+
+Table 1. The Number of Each Nucleotide per Partial Sequence
+-------------------------------
+Sequence  |A      | T    | C     | G
+--------  |-------|------|------ | ----
+`r paste(Names[1])`|`r paste(PSA[1])` |`r paste(PST[1])`|`r paste(PSC[1])` |`r paste(PSG[1])`
+`r paste(Names[2])`|`r paste(PSA[2])` |`r paste(PST[2])`|`r paste(PSC[2])` |`r paste(PSG[2])`
+`r paste(Names[3])`|`r paste(PSA[3])` |`r paste(PST[3])`|`r paste(PSC[3])` |`r paste(PSG[3])`
 
