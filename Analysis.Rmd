@@ -22,10 +22,14 @@ output: html_document
 #9 create a scatterplot based on gc content from GC_content.csv (calculate %gc first), distinguish all 3 species as clearly as possible
 
 #read the csv for the data.
+library(dplyr)
+library(ggplot2)
 library(knitr)
 Seq=read.csv("Sequences.csv")
 #this command removes all supplimentary info from the sequences, leaving us with purely the nucleotides
 PureSeq=paste(gsub(">.*: ","",Seq$x))
+#calculating the length of each sequence can be done by using the nchar function on pure seq, which counts the number of characters in each of it's subsets
+Length=nchar(PureSeq)
 
 #The following commands count the number of each type of (naming conventions: Pure Sequence As = PSA)
 #nucleotide in each sequnce by removing everything from the sequnce except for that type of nucleotide
@@ -37,6 +41,11 @@ PSC=nchar(gsub(">.*: |*[^C]","",Seq$x))
 PSG=nchar(gsub(">.*: |*[^G]","",Seq$x))
 Names=gsub("Borrelia.*","",Seq$x)
 
+#Final math to calculate %gc for each sequence
+PSAT=PSA+PST
+PSGC=PSG+PSC
+PSGCP=PSGC/Length*100
+PSGCP=round(PSGCP,2)
 ```
 
 
@@ -75,4 +84,31 @@ Sequence  |A      | T    | C     | G
 `r paste(Names[1])`|`r paste(PSA[1])` |`r paste(PST[1])`|`r paste(PSC[1])` |`r paste(PSG[1])`
 `r paste(Names[2])`|`r paste(PSA[2])` |`r paste(PST[2])`|`r paste(PSC[2])` |`r paste(PSG[2])`
 `r paste(Names[3])`|`r paste(PSA[3])` |`r paste(PST[3])`|`r paste(PSC[3])` |`r paste(PSG[3])`
+
+```{r echo=FALSE}
+#send help, I've spent way too much time on this assignment
+```
+
+
+Table 2. The %GC for Each Partial Sequence
+-------------------------------
+Sequence  |%GC
+--------  |-----
+`r paste(Names[1])`|`r paste(PSGCP[1])`% 
+`r paste(Names[2])`|`r paste(PSGCP[2])`%
+`r paste(Names[3])`|`r paste(PSGCP[3])`%
+
+#Scatterplot of GC% With Species Easily Distinguishable
+```{r echo=FALSE}
+#time to bring the GC_csv into play
+GC=read.csv("GC_content.csv")
+#create a new row which has g and c percentages added together
+GC$GCP =(GC$G+GC$C)
+GC$ATP =(100-GC$GCP)
+#remove all rows except for ID and GC% as these are the two needed for the graph
+GCGraph=select(GC,ID,Species,GCP,ATP)  
+#the instructions say to create a scattersheet for gc% even though you need two numerical columns for a scatter sheet? not quite sure what we're supposed to use for the second numerical value, and it's too late to ask now, so I threw in AT%. This of course just creates a line, but it's a working graph at least ¯\_(ツ)_/¯
+
+qplot(ATP,GCP,colour=Species,data=GC,ylab = "AT%", xlab = "GC%", alpha=I(0.7)) + theme_classic()
+```
 
