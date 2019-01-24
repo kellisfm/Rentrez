@@ -25,9 +25,8 @@ Bburg<-entrez_fetch(db = "nuccore", id = ncbi_ids, rettype = "fasta")
 #id=ncbi_ids, assigns the vector of ids we made earlier to the data, giving the sequences their names
 #Finally, rettype = "fasta" tells R which format the data is in. In this case Fasta
 
-#we're gonna start off by cleaning up the data using regular expressions cause there's a lot of \n's
-#additionally, we're gonna add in a marker infront of each ncbi id that we can use for string splitting
-Bburg=gsub("\n","",Bburg)
+#add in a marker infront of each ncbi id that we can use for string splitting
+Bburg
 Bburg=gsub(" sequence"," sequence: ",Bburg)
 Bburg=gsub(">","-Target- >",Bburg)
 
