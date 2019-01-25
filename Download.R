@@ -40,7 +40,6 @@ BurgVec=strsplit(Bburg,"-Target- ")
 #unlist seems to remove the title from the csv, which is nice.
 BurgVec=unlist(BurgVec)
 
-BurgVec
 #now we can upload this to a .csv and move on to the R markdown section!
 write.csv(BurgVec,"Sequences.csv")
 
