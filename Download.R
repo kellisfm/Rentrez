@@ -26,7 +26,8 @@ Bburg<-entrez_fetch(db = "nuccore", id = ncbi_ids, rettype = "fasta")
 #Finally, rettype = "fasta" tells R which format the data is in. In this case Fasta
 
 #add in a marker infront of each ncbi id that we can use for string splitting
-Bburg
+#additionally, swapping the unkown nucleotides (\n) to N will enable easier counting of nucleotides down the road
+Bburg=gsub("\n","N",Bburg)
 Bburg=gsub(" sequence"," sequence: ",Bburg)
 Bburg=gsub(">","-Target- >",Bburg)
 
