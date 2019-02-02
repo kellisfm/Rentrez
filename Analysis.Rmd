@@ -35,10 +35,10 @@ Length=nchar(PureSeq)
 #nucleotide in each sequnce by removing everything from the sequnce except for that type of nucleotide
 #additionally, the Names obj contains all of the names of the nucleotides
 
-PSA=nchar(gsub(">.*: |*[^A]","",Seq$x))
-PST=nchar(gsub(">.*: |*[^T]","",Seq$x))
-PSC=nchar(gsub(">.*: |*[^C]","",Seq$x))
-PSG=nchar(gsub(">.*: |*[^G]","",Seq$x))
+PSA=nchar(gsub(">.*: |.[^A]","",Seq$x))
+PST=nchar(gsub(">.*: |.[^T]","",Seq$x))
+PSC=nchar(gsub(">.*: |.[^C]","",Seq$x))
+PSG=nchar(gsub(">.*: |.[^G]","",Seq$x))
 Names=gsub("Borrelia.*","",Seq$x)
 
 #Final math to calculate %gc for each sequence
